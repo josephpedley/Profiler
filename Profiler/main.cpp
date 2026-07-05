@@ -1,5 +1,6 @@
 #include "Profiler.h"
 #include "PercentileObserver.h"
+#include "HistogramObserver.h"
 #include "ScopedTimer.h"
 
 #include <iostream>
@@ -21,7 +22,10 @@ int main()
     // Attach BEFORE registering probes, observers only hear
     // onProbeRegistered for probes registered after they attach.
     PercentileObserver percentiles;
+    HistogramObserver histograms;
+
     auto handle = profiler.Attach(&percentiles);
+    auto handle2 = profiler.Attach(&histograms);
 
     Probe& sumProbe = profiler.RegisterProbe("sum/int");
 

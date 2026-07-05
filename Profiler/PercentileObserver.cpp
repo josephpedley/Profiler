@@ -32,6 +32,6 @@ void PercentileObserver::onReportRequested()
 			<< "p99: " << percentile(0.99) << "ns \n"
 			<< "p99.9: " << percentile(0.999) << "ns \n"
 			<< "p99.99: " << percentile(0.9999) << "ns \n"
-			<< "worst case: " << samples.back() << "ns \n";
+			<< "worst case: " << samples.back() << "ns \n\n";
 	}
 }
