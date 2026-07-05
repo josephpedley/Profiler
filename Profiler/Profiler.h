@@ -18,15 +18,15 @@ public:
 
 		// Handles born in attach so must be moveable
 		Handle(Handle&& other) noexcept {
-			m_prof = std::exchange(m_prof, nullptr);
-			m_observer = std::exchange(m_observer, nullptr); }
+			m_prof = std::exchange(other.m_prof, nullptr);
+			m_observer = std::exchange(other.m_observer, nullptr); }
 
 		Handle& operator=(Handle&& other) noexcept {
 			if (this != &other)
 			{
 				reset();
-				m_prof = std::exchange(m_prof, nullptr);
-				m_observer = std::exchange(m_observer, nullptr); 
+				m_prof = std::exchange(other.m_prof, nullptr);
+				m_observer = std::exchange(other.m_observer, nullptr); 
 			}
 			return *this; }
 
