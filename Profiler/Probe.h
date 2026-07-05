@@ -18,7 +18,7 @@ public:
 	/* Probes hand out references of themselves to scopedTimer and registerProbe
 	their addresses therefore must be stable for the profilers lifetime and should be unmovable */
 	Probe(Probe&& other) = delete;
-	Probe& operator=(const Probe&&) = delete;
+	Probe& operator=(Probe&&) = delete;
 
 	void Record (uint64_t nsTime) { m_samples.push_back(nsTime); }
 	const std::string& Name() const { return m_name; }
