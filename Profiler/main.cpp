@@ -1,29 +1,40 @@
-#include "Probe.h"
+#include "Profiler.h"
+#include "PercentileObserver.h"
 #include "ScopedTimer.h"
-#include "Report.h"
-#include <numeric> 
-#include <vector>
-#include <iostream>
 
-namespace 
-{    
-long long sumInts(const std::vector<int>& v) {
+#include <iostream>
+#include <numeric>
+#include <vector>
+
+namespace
+{
+long long sumInts(const std::vector<int>& v)
+{
     return std::accumulate(v.begin(), v.end(), 0LL);
 }
 } // namespace
 
-int main() {
+int main()
+{
+    Profiler profiler;
+
+    // Attach BEFORE registering probes, observers only hear
+    // onProbeRegistered for probes registered after they attach.
+    PercentileObserver percentiles;
+    auto handle = profiler.Attach(&percentiles);
+
+    Probe& sumProbe = profiler.RegisterProbe("sum/int");
+
     std::vector<int> ints(10000);
-    std::iota(ints.begin(), ints.end(), 0);   
+    std::iota(ints.begin(), ints.end(), 0);
 
-    Probe sumProbe{ "sum/int" };
-
-    long long witness = 0;
-    for (int run = 0; run < 10000; ++run) {
+    long long witness = 0;                    // witness just to stop compiler eliminating code
+    for (int run = 0; run < 10000; ++run)
+    {
         ScopedTimer t(sumProbe);
         witness += sumInts(ints);
     }
 
-    printReport(sumProbe);
+    profiler.Report();
     std::cout << "(witness " << witness << ")\n";
 }
