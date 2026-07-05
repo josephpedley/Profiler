@@ -7,4 +7,6 @@ Lesson:
 Windows uses QueryPerformanceCounter for steady_clock. Resolution must be 100ns. Also printed the sum to get a much larger ns value. Previously the compiler knew the loop had no observable effect
 and deleted it. Printing it forced the work to happen.
 
+Mark single parameter constructors as explicit to avoid unintentional implicit conversions.
+
 
